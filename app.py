@@ -14,6 +14,10 @@ nb_model = joblib.load(nb_model_path)  # Naïve Bayes
 rf_model = joblib.load(rf_model_path)  # Random Forest
 vectorizer = joblib.load(vectorizer_path)
 
+@app.route("/")  
+def home():
+    return "Fake News Detection API is running!", 200
+
 @app.route('/predict', methods=['POST'])
 def predict():
     """Receive text from frontend, predict using selected model (NB or RF)."""
