@@ -1,9 +1,11 @@
 from flask import Flask, request, jsonify
 import joblib
 from db import save_to_mongo
+from flask_cors import CORS
 import os
 
 app = Flask(__name__)
+CORS(app)
 
 # Load both models and vectorizer
 nb_model_path = os.path.join(os.path.dirname(__file__), "fake_news_nb_model.pkl")
@@ -49,4 +51,5 @@ def predict():
     return jsonify({"prediction": result, "model_used": model_type})
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Use Render's assigned port
+    app.run(host="0.0.0.0", port=port, debug=True)
